@@ -390,9 +390,7 @@ class Script {
             ITEM_SID: { type: oracledb.STRING },
           },
         };
-        console.log("fetching query");
-        console.log(sql);
-
+        console.log("fetching pos sales");
         const slipsQuery = await connection.execute(sql, binds, options);
         let orders = [];
 
@@ -464,7 +462,6 @@ class Script {
         };
 
         console.log(summary);
-        console.log(orders);
         await axios
           .post("https://api.juleb.com/agent_receiver/pos-invoices", orders)
           .then(async (response) => {
@@ -473,8 +470,6 @@ class Script {
             console.log(response);
             if (reducedOrders.length > 0) {
               let lastScannedVal = reducedUniqueOrders[targetIndex].sid;
-
-              //return
               if (lastScannedVal.length > 0) {
                 const bookmarks: IBookmark = JSON.parse(
                   (await promises.readFile(this.bookmarkFilePath)).toString()
