@@ -340,7 +340,7 @@ class Script {
                   ON CMS.INVC_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
                   AND CMS.INVC_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
                   WHERE CMS.INVOICE.STORE_NO = :v1
-                  AND CMS.INVOICE.POST_DATE >= ${startingDate} ;`;
+                  AND CMS.INVOICE.POST_DATE >= '${startingDate}' ;`;
           sql = sql2;
           binds = [store_info.store_no];
         } else {
