@@ -307,7 +307,8 @@ class Script {
           "store_code"
         );
         if (!bookmark) {
-          const sql2 = `SELECT CMS.INVOICE.INVC_SID,
+          const sql2 =
+            `SELECT CMS.INVOICE.INVC_SID,
                   STORE_NO,
                   CMS.INVOICE.CLERK_ID,
                   CASHIER_ID,
@@ -340,7 +341,8 @@ class Script {
                   ON CMS.INVC_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
                   AND CMS.INVC_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
                   WHERE CMS.INVOICE.STORE_NO = :v1
-                  AND CMS.INVOICE.POST_DATE >= '${startingDate}' ;`;
+                  AND CMS.INVOICE.POST_DATE >= ` +
+            `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS') `;
           sql = sql2;
           binds = [store_info.store_no];
         } else {
