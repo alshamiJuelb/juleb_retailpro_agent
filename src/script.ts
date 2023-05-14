@@ -389,6 +389,8 @@ class Script {
           },
         };
         console.log("fetching query");
+        console.log(sql);
+
         const slipsQuery = await connection.execute(sql, binds, options);
         let orders = [];
 
