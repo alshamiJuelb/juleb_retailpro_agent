@@ -1,11 +1,10 @@
-require("dotenv").config();
 import axios from "axios";
 import { oracledb } from "oracledb";
 import { existsSync, promises } from "fs";
 
 class Script {
-  paramsFilePath: string = "/params.json";
-  bookmarkFilePath: string = "/bookmarks.json";
+  paramsFilePath: string = "./params.json";
+  bookmarkFilePath: string = "./bookmarks.json";
   constructor() {}
 
   async fetchStoreName(connection, store_code, identifier) {
@@ -490,8 +489,8 @@ class Script {
   }
 
   async wrapper() {
-    const paramsExist = existsSync("/params.json");
-    const bookmarkExist = existsSync("/bookmark.json");
+    const paramsExist = existsSync(this.paramsFilePath);
+    const bookmarkExist = existsSync(this.bookmarkFilePath);
     if (!paramsExist || !bookmarkExist) {
       console.log(
         "make sure to have params.json and bookmark.json in the project directory"
@@ -568,7 +567,7 @@ interface IParams {
   user: string;
   password: string;
   connectString: string;
-  storeCode: string | string[];
+  storeCode: any;
   syncPOS: boolean;
   syncTransfers: boolean;
   ignoreBookmark: boolean;
