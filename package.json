@@ -1,0 +1,25 @@
+{
+    "name": "juleb_retailpro_agent",
+    "version": "1.0.0",
+    "private": true,
+    "description": "JULEB RetailPro Integration Agent, now utilizing Windows Task Scheduler and polling master data",
+    "author": "Juleb",
+    "license": "UNLICENSED",
+    "main": "index.js",
+    "scripts": {
+        "test": "ts-node ./src/polling.js",
+        "lint": "echo \"No linting configured\""
+    },
+    "dependencies": {
+        "axios": "^0.25.0",
+        "mssql": "^9.1.1",
+        "oracledb": "^5.3.0",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {
+        "eslint": "^8.28.0",
+        "oracledb": "^5.3.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "user": "reportuser",
+    "password": "report",
+    "connectString": "localhost:1521/rproods",
+    "storeCode": "065",
+    "syncPOS": true,
+    "syncStockReceipts": false,
+    "syncMasterData": false,
+    "ignoreBookmark": true,
+    "inputDate": "2023-05-01 00:00:00"
+}
