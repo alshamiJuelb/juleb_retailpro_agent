@@ -1,5 +1,6 @@
 import axios from "axios";
-import { oracledb } from "oracledb";
+import oracledb = require("oracledb");
+
 import { existsSync, promises } from "fs";
 
 class Script {
