@@ -86,11 +86,6 @@ class Script {
   }
 
   async minifetchInvoice(connection, invoice_sid) {
-    let connectionInfo = {
-      user: "reportuser",
-      password: "report",
-      connectString: "localhost:1521/rproods",
-    };
     const sql2 = `SELECT CMS.INVOICE.INVC_SID,
               
               CMS.INVOICE.INVC_NO,
@@ -443,6 +438,8 @@ class Script {
             payments: paymentRows.rows,
           };
           orders.push(singleOrder);
+          console.log(singleOrder);
+          return;
         }
 
         let summary_lines = [];
@@ -511,19 +508,19 @@ class Script {
     }
     console.log({ params });
     console.log({ bookmarks });
+    const stores =
+      typeof params.storeCode === "string"
+        ? params.storeCode.split(",")
+        : [params.storeCode];
+    // console.log(stores);
+    // return;
     const connection = await oracledb.getConnection({
       user: params.user ? params.user : "reportuser",
       password: params.password ? params.password : "report",
       connectString: params.connectString
         ? params.connectString
         : "localhost:1521/rproods",
-      storeCode: params.storeCode,
     });
-    const stores =
-      typeof params.storeCode === "string"
-        ? params.storeCode.split(",")
-        : [params.storeCode];
-
     if (params.syncPOS) {
       if (params.ignoreBookmark) {
         if (params.startingDate)
