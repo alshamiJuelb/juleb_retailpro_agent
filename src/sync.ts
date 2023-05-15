@@ -483,6 +483,105 @@ class Script {
     }
   }
 
+  async syncProducts(connection) {
+    const currDate = new Date();
+    const offset = 60 * 60 * 24 * 1000;
+    currDate.setTime(currDate.getTime() - offset);
+    const formattedDate = currDate.toISOString().substring(0, 10);
+    let sql;
+    let binds = [];
+    sql = `SELECT CMS.INVN_SBS.ALU,
+          CMS.INVN_SBS.DCS_CODE,
+          DESCRIPTION1,
+          DESCRIPTION2,
+          DESCRIPTION3,
+          VEND_CODE,
+          CMS.INVN_SBS.TAX_CODE,
+          CMS.INVN_SBS.CMS_POST_DATE,
+          CMS.INVN_SBS.MODIFIED_DATE,
+          CMS.INVN_SBS.ITEM_SID,
+          CMS.INVN_SBS.COST,
+          CMS.INVN_SBS_PRICE.ITEM_SID,
+          CMS.INVN_SBS_PRICE.PRICE,
+          CMS.INVN_SBS_PRICE.PRICE_LVL,
+          D_NAME,
+          C_NAME,
+          S_NAME
+          FROM CMS.INVN_SBS
+          LEFT JOIN CMS.INVN_SBS_PRICE
+          ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
+          LEFT JOIN CMS.DCS
+          ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
+          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
+          AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
+    const options = {
+      outFormat: oracledb.OUT_FORMAT_OBJECT,
+      fetchInfo: {
+        ITEM_SID: { type: oracledb.STRING },
+      },
+    };
+    console.log("fetching masterdata query");
+    const masterDataQuery = await connection.execute(sql, binds, options);
+    const payload = {
+      selector: "Full",
+      lines: masterDataQuery.rows,
+    };
+    await axios
+      .post("https://api.juleb.com/agent_receiver/master-data", payload)
+      .then(async function (response) {
+        console.log("sent:");
+        console.log(masterDataQuery.rows.length);
+        console.log(response);
+      });
+  }
+
+  async syncPrices(connection) {
+    const currDate = new Date();
+    const offset = 60 * 60 * 3 * 1000;
+    currDate.setTime(currDate.getTime() - offset);
+    let sql;
+    let binds = [];
+    sql = `SELECT CMS.INVN_SBS.ALU,
+    CMS.INVN_SBS.TAX_CODE,
+    CMS.INVN_SBS.ITEM_SID,
+    CMS.INVN_SBS.COST,
+    CMS.INVN_SBS.SBS_NO,
+    CMS.INVN_SBS_PRICE.ITEM_SID,
+    CMS.INVN_SBS_PRICE.PRICE,
+    CMS.INVN_SBS_PRICE.PRICE_LVL
+    FROM CMS.INVN_SBS
+    LEFT JOIN CMS.INVN_SBS_PRICE
+    ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
+    WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
+    AND CMS.INVN_SBS.SBS_NO = 8`;
+    const options = {
+      outFormat: oracledb.OUT_FORMAT_OBJECT,
+      fetchInfo: {
+        ITEM_SID: { type: oracledb.STRING },
+      },
+    };
+    console.log("fetching prices query");
+    const masterDataQuery = await connection.execute(sql, binds, options);
+    const payload = {
+      selector: "Prices",
+      lines: masterDataQuery.rows,
+    };
+
+    console.log({
+      selector: payload.selector,
+      lines: payload.lines.slice(0, 10),
+    });
+
+    return;
+    await axios
+      .post("https://api.juleb.com/agent_receiver/master-data", payload)
+      .then(async function (response) {
+        console.log("sent:");
+        console.log(masterDataQuery.rows);
+        console.log(response);
+      });
+  }
+
   async wrapper() {
     const paramsExist = existsSync(this.paramsFilePath);
     const bookmarkExist = existsSync(this.bookmarkFilePath);
@@ -552,6 +651,10 @@ class Script {
         else throw new Error("no bookmark for Transfers");
       }
     }
+    if (params.syncMasterData) {
+      await this.syncProducts(connection);
+      await this.syncPrices(connection);
+    }
   }
 }
 
@@ -565,6 +668,7 @@ interface IParams {
   storeCode: any;
   syncPOS: boolean;
   syncTransfers: boolean;
+  syncMasterData: boolean;
   ignoreBookmark: boolean;
   startingDate: string;
 }

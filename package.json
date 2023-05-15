@@ -7,7 +7,7 @@
     "license": "UNLICENSED",
     "main": "index.js",
     "scripts": {
-        "sync": "ts-node ./src/script.ts",
+        "sync": "ts-node ./src/sync.ts",
         "lint": "echo \"No linting configured\""
     },
     "dependencies": {
