@@ -547,7 +547,7 @@ class Script {
             "you cannot ignore bookmark without specifying the starting date"
           );
       } else {
-        if (bookmarks.pos)
+        if (bookmarks.transfer)
           await this.poll(connection, stores, bookmarks.transfer);
         else throw new Error("no bookmark for Transfers");
       }

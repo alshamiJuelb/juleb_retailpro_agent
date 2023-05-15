@@ -4,7 +4,7 @@
     "connectString": "localhost:1521/rproods",
     "storeCode": "065",
     "syncPOS": true,
-    "syncStockReceipts": false,
+    "syncTransfers": true,
     "syncMasterData": false,
     "ignoreBookmark": true,
     "startingDate": "2023-05-14 00:00:00"
