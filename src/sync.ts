@@ -608,9 +608,7 @@ class Script {
     const stores =
       typeof params.storeCode === "string"
         ? params.storeCode.split(",")
-        : [params.storeCode];
-    // console.log(stores);
-    // return;
+        : params.storeCode;
     const connection = await oracledb.getConnection({
       user: params.user ? params.user : "reportuser",
       password: params.password ? params.password : "report",
