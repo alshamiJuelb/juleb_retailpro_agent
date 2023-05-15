@@ -438,8 +438,6 @@ class Script {
             payments: paymentRows.rows,
           };
           orders.push(singleOrder);
-          console.log(singleOrder);
-          return;
         }
 
         let summary_lines = [];
