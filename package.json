@@ -8,6 +8,7 @@
     "main": "index.js",
     "scripts": {
         "sync": "ts-node ./src/sync.ts",
+        "initiate_stocks": "ts-node ./src/import_stocks.ts",
         "lint": "echo \"No linting configured\""
     },
     "dependencies": {
