@@ -6,6 +6,7 @@ import { existsSync, promises } from "fs";
 class Script {
   paramsFilePath: string = "./params.json";
   bookmarkFilePath: string = "./bookmarks.json";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
   constructor() {}
 
   async fetchStoreName(connection, store_code, identifier) {
@@ -263,7 +264,7 @@ class Script {
         console.log(orders);
         console.log(summary);
         await axios
-          .post("https://api.juleb.com/agent_receiver/transfer", orders)
+          .post(`${this.julebApiUrl}/transfer`, orders)
           .then(async (response) => {
             console.log("sent:");
             console.log(summary);
@@ -458,7 +459,7 @@ class Script {
 
         console.log(summary);
         await axios
-          .post("https://api.juleb.com/agent_receiver/pos-invoices", orders)
+          .post(`${this.julebApiUrl}/pos-invoices`, orders)
           .then(async (response) => {
             console.log("sent:");
             console.log(summary);
@@ -527,7 +528,7 @@ class Script {
       lines: masterDataQuery.rows,
     };
     await axios
-      .post("https://api.juleb.com/agent_receiver/master-data", payload)
+      .post(`${this.julebApiUrl}/master-data`, payload)
       .then(async function (response) {
         console.log("sent:");
         console.log(masterDataQuery.rows.length);
@@ -574,7 +575,7 @@ class Script {
 
     return;
     await axios
-      .post("https://api.juleb.com/agent_receiver/master-data", payload)
+      .post(`${this.julebApiUrl}/master-data`, payload)
       .then(async function (response) {
         console.log("sent:");
         console.log(masterDataQuery.rows);
