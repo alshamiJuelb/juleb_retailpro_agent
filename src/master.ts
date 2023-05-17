@@ -10,7 +10,7 @@ class Script {
 
   async syncProducts(connection) {
     const currDate = new Date();
-    const offset = 60 * 60 * 24 * 1000 * 5;
+    const offset = 60 * 60 * 24 * 1000 * 60;
     currDate.setTime(currDate.getTime() - offset);
     const formattedDate = currDate.toISOString().substring(0, 10);
     let sql;
@@ -97,7 +97,6 @@ class Script {
       lines: payload.lines.slice(0, 10),
     });
 
-    return;
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
       .then(async function (response) {
