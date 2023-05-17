@@ -5,7 +5,9 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  julebApiUrl = "https://261d-176-18-80-157.ngrok-free.app";
+
   constructor() {}
   async fetchStoreName(connection, store_code, identifier) {
     let sql = ``;
@@ -76,7 +78,7 @@ class Script {
                       ON CMS.LOT_QTY.ITEM_SID = INVN_SBS.ITEM_SID
                       LEFT JOIN CMS.INVENTORY_ALU_ALL
                       ON CMS.LOT_QTY.ITEM_SID = CMS.INVENTORY_ALU_ALL.ITEM_SID
-                      WHERE CMS.LOT_QTY.QTY != 0 AND INVN_SBS.ACTIVE = 1 AND CMS.LOT_QTY.STORE_NO = :v1 AND CMS.INVENTORY_ALU_ALL.ALU = '015019006'`;
+                      WHERE CMS.LOT_QTY.QTY != 0 AND INVN_SBS.ACTIVE = 1 AND CMS.LOT_QTY.STORE_NO = :v1`;
         binds = [store_info.store_no];
         const options = {
           outFormat: oracledb.OUT_FORMAT_OBJECT,
