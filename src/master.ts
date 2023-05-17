@@ -126,10 +126,8 @@ class Script {
         ? params.connectString
         : "localhost:1521/rproods",
     });
-    if (params.syncMasterData) {
-      await this.syncProducts(connection);
-      await this.syncPrices(connection);
-    }
+    await this.syncProducts(connection);
+    await this.syncPrices(connection);
   }
 }
 
@@ -140,5 +138,4 @@ interface IParams {
   user: string;
   password: string;
   connectString: string;
-  syncMasterData: boolean;
 }
