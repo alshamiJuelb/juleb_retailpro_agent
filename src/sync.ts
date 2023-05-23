@@ -32,7 +32,8 @@ class Script {
     CMS.STORE.STORE_CODE,
     CMS.STORE.STORE_NO
     FROM CMS.STORE
-    WHERE CMS.STORE.STORE_NO = :storeCode`;
+    WHERE CMS.STORE.STORE_NO = :storeCode
+    AND CMS.STORE.SBS_NO = 8`;
       binds = {
         storecode: {
           dir: oracledb.BIND_IN,
