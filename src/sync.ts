@@ -118,10 +118,6 @@ class Script {
 
   async poll(connection, stores, bookmark?, startingDate?) {
     console.log("polling branch receipts");
-    const dateTime = `${startingDate.substring(0, 10)} ${startingDate.substring(
-      11,
-      16
-    )}:00`;
     for (let i = 0; i < stores.length; i++) {
       const currentStore = stores[i];
       console.log(
@@ -138,56 +134,56 @@ class Script {
         if (!bookmark) {
           const sql2 =
             `SELECT CMS.SLIP.SLIP_SID,
-                           OUT_STORE_NO,
-                           IN_STORE_NO,
-                           CMS.SLIP.CREATED_DATE,
-                           CMS.SLIP.MODIFIED_DATE,
-                           CMS.SLIP.SLIP_NO,
-                           CMS.SLIP_ITEM.ITEM_SID,
-                           QTY,
-                           PRICE,
-                           COST,
-                           CMS.LOT.LOT_NUMBER,
-                           ALU,
-                           CMS.LOT.EXPIRY_DATE
-                           FROM CMS.SLIP
-                           FULL JOIN CMS.SLIP_ITEM
-                           ON CMS.SLIP.SLIP_SID = CMS.SLIP_ITEM.SLIP_SID
-                           INNER JOIN CMS.INVENTORY_ALU_ALL
-                           ON CMS.SLIP_ITEM.ITEM_SID = CMS.INVENTORY_ALU_ALL.ITEM_SID
-                           INNER JOIN CMS.LOT
-                           ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
-                           AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
-                           WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
-                           AND CMS.SLIP.POST_DATE >= ` +
-            `TO_DATE('${dateTime}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
+            OUT_STORE_NO,
+            IN_STORE_NO,
+            CMS.SLIP.CREATED_DATE,
+            CMS.SLIP.MODIFIED_DATE,
+            CMS.SLIP.SLIP_NO,
+            CMS.SLIP_ITEM.ITEM_SID,
+            QTY,
+            PRICE,
+            COST,
+            CMS.LOT.LOT_NUMBER,
+            ALU,
+            CMS.LOT.EXPIRY_DATE
+            FROM CMS.SLIP
+            FULL JOIN CMS.SLIP_ITEM
+            ON CMS.SLIP.SLIP_SID = CMS.SLIP_ITEM.SLIP_SID
+            INNER JOIN CMS.INVENTORY_ALU_ALL
+            ON CMS.SLIP_ITEM.ITEM_SID = CMS.INVENTORY_ALU_ALL.ITEM_SID
+            INNER JOIN CMS.LOT
+            ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
+            AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
+            WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
+            AND CMS.SLIP.POST_DATE >= ` +
+            `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           sql = sql2;
           binds = [store_info.store_no, store_info.store_no];
         } else {
           let bookMark = await this.minifetchSlip(connection, bookmark);
           sql = `SELECT CMS.SLIP.SLIP_SID,
-                       OUT_STORE_NO,
-                       IN_STORE_NO,
-                       CMS.SLIP.CREATED_DATE,
-                       CMS.SLIP.MODIFIED_DATE,
-                       CMS.SLIP.SLIP_NO,
-                       CMS.SLIP_ITEM.ITEM_SID,
-                       QTY,
-                       PRICE,
-                       COST,
-                       CMS.LOT.LOT_NUMBER,
-                       ALU,
-                       CMS.LOT.EXPIRY_DATE
-                       FROM CMS.SLIP
-                       FULL JOIN CMS.SLIP_ITEM
-                       ON CMS.SLIP.SLIP_SID = CMS.SLIP_ITEM.SLIP_SID
-                       INNER JOIN CMS.INVENTORY_ALU_ALL
-                       ON CMS.SLIP_ITEM.ITEM_SID = CMS.INVENTORY_ALU_ALL.ITEM_SID
-                       INNER JOIN CMS.LOT
-                       ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
-                       AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
-                       WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
-                       AND CMS.SLIP.POST_DATE      >= :v3`; //TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
+          OUT_STORE_NO,
+          IN_STORE_NO,
+          CMS.SLIP.CREATED_DATE,
+          CMS.SLIP.MODIFIED_DATE,
+          CMS.SLIP.SLIP_NO,
+          CMS.SLIP_ITEM.ITEM_SID,
+          QTY,
+          PRICE,
+          COST,
+          CMS.LOT.LOT_NUMBER,
+          ALU,
+          CMS.LOT.EXPIRY_DATE
+          FROM CMS.SLIP
+          FULL JOIN CMS.SLIP_ITEM
+          ON CMS.SLIP.SLIP_SID = CMS.SLIP_ITEM.SLIP_SID
+          INNER JOIN CMS.INVENTORY_ALU_ALL
+          ON CMS.SLIP_ITEM.ITEM_SID = CMS.INVENTORY_ALU_ALL.ITEM_SID
+          INNER JOIN CMS.LOT
+          ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
+          AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
+          WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
+          AND CMS.SLIP.POST_DATE      >= :v3`; //TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           binds = [store_info.store_no, store_info.store_no, bookMark];
         }
         // For a complete list of options see the documentation.
