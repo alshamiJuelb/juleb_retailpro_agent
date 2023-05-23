@@ -156,7 +156,7 @@ class Script {
             AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
             WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
             AND CMS.SLIP.POST_DATE >= ` +
-            `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS') AND CMS.SLIP.SLIP_NO = 121189`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
+            `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           sql = sql2;
           binds = [store_info.store_no, store_info.store_no];
         } else {
