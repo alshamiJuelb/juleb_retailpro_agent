@@ -37,7 +37,7 @@ class Script {
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
-          WHERE CMS.INVN_SBS.VEND_CODE = '626000'`; //
+          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
@@ -46,18 +46,9 @@ class Script {
     };
     console.log("fetching masterdata query");
     const masterDataQuery = await connection.execute(sql, binds, options);
-    const productsPriceLvl1 = masterDataQuery.rows.filter(
-      (rec) => rec.PRICE_LVL === 1
-    );
-    masterDataQuery.rows
-      .filter((rec) => rec.PRICE_LVL === 2)
-      .map((rec) => {
-        if (!productsPriceLvl1.find((prod) => prod.ALU === rec.ALU))
-          productsPriceLvl1.push({ ...rec, PRICE: 0 });
-      });
     const payload = {
       selector: "Full",
-      lines: productsPriceLvl1,
+      lines: masterDataQuery.rows,
     };
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
