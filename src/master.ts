@@ -46,6 +46,18 @@ class Script {
     };
     console.log("fetching masterdata query");
     const masterDataQuery = await connection.execute(sql, binds, options);
+    const productsPriceLvl1 = masterDataQuery.rows.filter(
+      (rec) => rec.PRICE_LVL === 1
+    );
+    const productsPriceLvl1ALU = productsPriceLvl1.map((rec) => rec.ALU);
+    masterDataQuery.rows
+      .filter((rec) => rec.PRICE_LVL === 2)
+      .map((rec) => {
+        if (!productsPriceLvl1ALU.include(rec.ALU))
+          productsPriceLvl1.push({ ...rec, PRICE: 0 });
+      });
+    console.log(productsPriceLvl1.length);
+    return;
     const payload = {
       selector: "Full",
       lines: masterDataQuery.rows,
@@ -125,7 +137,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    // await this.syncPrices(connection);
+    await this.syncPrices(connection);
   }
 }
 
