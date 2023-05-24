@@ -37,8 +37,7 @@ class Script {
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
-          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
-          AND CMS.INVN_SBS.VEND_CODE = '888888'`; //
+          WHERE CMS.INVN_SBS.VEND_CODE = '888888'`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
