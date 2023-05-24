@@ -57,7 +57,7 @@ class Script {
       });
     const payload = {
       selector: "Full",
-      lines: masterDataQuery.rows,
+      lines: productsPriceLvl1,
     };
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
