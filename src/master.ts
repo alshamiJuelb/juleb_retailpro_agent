@@ -55,8 +55,6 @@ class Script {
         if (!productsPriceLvl1.find((prod) => prod.ALU === rec.ALU))
           productsPriceLvl1.push({ ...rec, PRICE: 0 });
       });
-    console.log(productsPriceLvl1);
-    return;
     const payload = {
       selector: "Full",
       lines: masterDataQuery.rows,
