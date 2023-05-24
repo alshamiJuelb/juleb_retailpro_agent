@@ -37,7 +37,7 @@ class Script {
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
-          WHERE CMS.INVN_SBS.VEND_CODE = '888888'`; //
+          WHERE CMS.INVN_SBS.VEND_CODE = '626000'`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
@@ -49,12 +49,12 @@ class Script {
     const productsPriceLvl1 = masterDataQuery.rows.filter(
       (rec) => rec.PRICE_LVL === 1
     );
-    // masterDataQuery.rows
-    //   .filter((rec) => rec.PRICE_LVL === 2)
-    //   .map((rec) => {
-    //     if (!productsPriceLvl1.find((prod) => prod.ALU === rec.ALU))
-    //       productsPriceLvl1.push({ ...rec, PRICE: 0 });
-    //   });
+    masterDataQuery.rows
+      .filter((rec) => rec.PRICE_LVL === 2)
+      .map((rec) => {
+        if (!productsPriceLvl1.find((prod) => prod.ALU === rec.ALU))
+          productsPriceLvl1.push({ ...rec, PRICE: 0 });
+      });
     console.log(productsPriceLvl1.length);
     return;
     const payload = {
