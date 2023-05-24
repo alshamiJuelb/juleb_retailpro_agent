@@ -53,7 +53,7 @@ class Script {
     masterDataQuery.rows
       .filter((rec) => rec.PRICE_LVL === 2)
       .map((rec) => {
-        if (!productsPriceLvl1ALU.include(rec.ALU))
+        if (!productsPriceLvl1ALU.includes(rec.ALU))
           productsPriceLvl1.push({ ...rec, PRICE: 0 });
       });
     console.log(productsPriceLvl1.length);
