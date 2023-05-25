@@ -38,7 +38,8 @@ class Script {
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
           WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
-          AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
+          AND CMS.INVN_SBS.VEND_CODE = '004020';`;
+    // AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
@@ -126,7 +127,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    await this.syncPrices(connection);
+    // await this.syncPrices(connection);
   }
 }
 
