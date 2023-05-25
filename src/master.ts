@@ -37,8 +37,8 @@ class Script {
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
-          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
-          AND CMS.INVN_SBS.VEND_CODE = '856000'`;
+          WHERE CMS.INVN_SBS.ALU = 'X1'
+          AND CMS.INVN_SBS.VEND_CODE = '999999'`;
     // AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
