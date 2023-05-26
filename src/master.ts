@@ -80,7 +80,8 @@ class Script {
     LEFT JOIN CMS.INVN_SBS_PRICE
     ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
     WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
-    AND CMS.INVN_SBS.SBS_NO = 8`;
+    AND CMS.INVN_SBS.SBS_NO = 8
+    AND CMS.INVN_SBS.COST < 0`;
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
@@ -127,7 +128,7 @@ class Script {
         ? params.connectString
         : "localhost:1521/rproods",
     });
-    await this.syncProducts(connection);
+    // await this.syncProducts(connection);
     await this.syncPrices(connection);
   }
 }
