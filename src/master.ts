@@ -6,7 +6,7 @@ import { existsSync, promises } from "fs";
 class Script {
   paramsFilePath: string = "./params.json";
   // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  julebApiUrl = "https://64b0-176-18-80-157.ngrok-free.app";
+  julebApiUrl = "https://64b0-176-18-80-157.ngrok-free.app/retailpro";
 
   constructor() {}
 
