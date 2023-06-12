@@ -92,7 +92,7 @@ class Script {
         console.log(stocksQuery.rows.filter((rec) => rec.ALU === "5831313"));
         const stockPayload = {
           store_code: store_info.store_code,
-          lines: stocksQuery.rows,
+          lines: stocksQuery.rows.filter((rec) => rec.ALU === "5831313"),
         };
 
         let summary = {
@@ -100,13 +100,13 @@ class Script {
           receiving_store: store_info.store_code,
         };
 
-        // await axios
-        //   .post(`${this.julebApiUrl}/import-stock`, stockPayload)
-        //   .then(async function (response) {
-        //     console.log("sent:");
-        //     console.log(summary);
-        //     console.log(response);
-        //   });
+        await axios
+          .post(`${this.julebApiUrl}/import-stock`, stockPayload)
+          .then(async function (response) {
+            console.log("sent:");
+            console.log(summary);
+            console.log(response);
+          });
       } catch (error) {
         console.log(error);
       }
