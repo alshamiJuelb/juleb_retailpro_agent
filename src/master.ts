@@ -5,10 +5,10 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  // julebApiUrl = "https://64b0-176-18-80-157.ngrok-free.app/retailpro";
+  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  julebApiUrl = "https://0c2d-176-18-80-157.ngrok-free.app/retailpro";
 
-  constructor() {}
+  constructor() { }
 
   async syncProducts(connection) {
     const currDate = new Date();
@@ -40,6 +40,7 @@ class Script {
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
           WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
+          AND CMS.INVN_SBS.ALU = '5712031'
           AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
@@ -128,7 +129,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    await this.syncPrices(connection);
+    // await this.syncPrices(connection);
   }
 }
 
