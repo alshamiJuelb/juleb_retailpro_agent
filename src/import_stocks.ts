@@ -89,10 +89,10 @@ class Script {
         };
         console.log("fetching query");
         const stocksQuery = await connection.execute(sql, binds, options);
-        console.log(stocksQuery.rows.filter((rec) => rec.ALU === "5831313"));
+        console.log(stocksQuery.rows);
         const stockPayload = {
           store_code: store_info.store_code,
-          lines: stocksQuery.rows.filter((rec) => rec.ALU === "5831313"),
+          lines: stocksQuery.rows,
         };
 
         let summary = {
