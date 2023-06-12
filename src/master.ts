@@ -12,7 +12,7 @@ class Script {
 
   async syncProducts(connection) {
     const currDate = new Date();
-    const offset = 60 * 60 * 24 * 1000 * 10;
+    const offset = 60 * 60 * 24 * 1000 * 14;
     currDate.setTime(currDate.getTime() - offset);
     const formattedDate = currDate.toISOString().substring(0, 10);
     let sql;
@@ -128,7 +128,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    await this.syncPrices(connection);
+    // await this.syncPrices(connection);
   }
 }
 
