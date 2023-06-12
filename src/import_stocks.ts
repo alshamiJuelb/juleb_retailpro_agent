@@ -8,7 +8,7 @@ class Script {
   julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
   // julebApiUrl = "https://1dfe-176-18-80-157.ngrok-free.app/retailpro";
 
-  constructor() { }
+  constructor() {}
   async fetchStoreName(connection, store_code, identifier) {
     let sql = ``;
     let binds = {};
@@ -89,7 +89,7 @@ class Script {
         };
         console.log("fetching query");
         const stocksQuery = await connection.execute(sql, binds, options);
-        console.log(stocksQuery.rows);
+        console.log(stocksQuery.rows.find((rec) => rec.ALU === "5831313"));
         const stockPayload = {
           store_code: store_info.store_code,
           lines: stocksQuery.rows,
@@ -100,13 +100,13 @@ class Script {
           receiving_store: store_info.store_code,
         };
 
-        await axios
-          .post(`${this.julebApiUrl}/import-stock`, stockPayload)
-          .then(async function (response) {
-            console.log("sent:");
-            console.log(summary);
-            console.log(response);
-          });
+        // await axios
+        //   .post(`${this.julebApiUrl}/import-stock`, stockPayload)
+        //   .then(async function (response) {
+        //     console.log("sent:");
+        //     console.log(summary);
+        //     console.log(response);
+        //   });
       } catch (error) {
         console.log(error);
       }
