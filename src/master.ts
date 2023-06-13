@@ -128,7 +128,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    // await this.syncPrices(connection);
+    await this.syncPrices(connection);
   }
 }
 
