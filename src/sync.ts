@@ -121,6 +121,7 @@ class Script {
 
   async poll(connection, stores, bookmark?, startingDate?) {
     console.log("polling branch receipts");
+    const group = [];
     for (let i = 0; i < stores.length; i++) {
       const currentStore = stores[i];
       console.log(
@@ -262,30 +263,33 @@ class Script {
         };
         console.log(orders);
         console.log(summary);
-        await axios
-          .post(`${this.julebApiUrl}/transfer`, orders)
-          .then(async (response) => {
-            console.log("sent:");
-            console.log(summary);
-            console.log(response);
-            if (reducedOrders.length > 0) {
-              let lastScannedVal = reducedUniqueOrders[targetIndex].sid;
-              if (lastScannedVal.length > 0) {
-                const bookmarks: IBookmark = JSON.parse(
-                  (await promises.readFile(this.bookmarkFilePath)).toString()
-                );
-                bookmarks.transfer = lastScannedVal;
-                await promises.writeFile(
-                  this.bookmarkFilePath,
-                  JSON.stringify(bookmarks)
-                );
-              }
-            }
-          });
+        group.push(orders);
+        if (reducedOrders.length > 0) {
+          let lastScannedVal = reducedUniqueOrders[targetIndex].sid;
+          if (lastScannedVal.length > 0) {
+            const bookmarks: IBookmark = JSON.parse(
+              (await promises.readFile(this.bookmarkFilePath)).toString()
+            );
+            bookmarks.transfer = lastScannedVal;
+            await promises.writeFile(
+              this.bookmarkFilePath,
+              JSON.stringify(bookmarks)
+            );
+          }
+        }
       } catch (ex) {
         console.log(ex);
       }
     }
+    await axios
+      .post(`${this.julebApiUrl}/transfer`, group)
+      .then(async (response) => {
+        console.log("done");
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async pollPOSSales(connection, stores, bookmark?, startingDate?) {
