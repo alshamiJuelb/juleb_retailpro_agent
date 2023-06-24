@@ -100,13 +100,13 @@ class Script {
           receiving_store: store_info.store_code,
         };
 
-        // await axios
-        //   .post(`${this.julebApiUrl}/import-stock`, stockPayload)
-        //   .then(async function (response) {
-        //     console.log("sent:");
-        //     console.log(summary);
-        //     console.log(response);
-        //   });
+        await axios
+          .post(`${this.julebApiUrl}/import-stock`, stockPayload)
+          .then(async function (response) {
+            console.log("sent:");
+            console.log(summary);
+            console.log(response);
+          });
       } catch (error) {
         console.log(error);
       }
