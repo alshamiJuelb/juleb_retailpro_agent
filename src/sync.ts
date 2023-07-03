@@ -281,15 +281,22 @@ class Script {
         console.log(ex);
       }
     }
-    await axios
-      .post(`${this.julebApiUrl}/transfer`, group)
-      .then(async (response) => {
-        console.log("done");
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const chunkSize = 50;
+    for (let i = 0; i < group.length; i += chunkSize) {
+      const chunk = group.slice(i, i + chunkSize);
+      await axios
+        .post(`${this.julebApiUrl}/transfer`, group)
+        .then(() => {
+          console.log(
+            `${chunk.length} orders sent, total send ${i + chunk.length} / ${
+              group.length
+            }`
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   async pollPOSSales(connection, stores, bookmark?, startingDate?) {
