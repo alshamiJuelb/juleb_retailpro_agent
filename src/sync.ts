@@ -121,7 +121,7 @@ class Script {
 
   async poll(connection, stores, bookmark?, startingDate?) {
     console.log("polling branch receipts");
-    const group = [];
+    const orders = [];
     for (let i = 0; i < stores.length; i++) {
       const currentStore = stores[i];
       console.log(
@@ -199,7 +199,6 @@ class Script {
         };
         console.log("fetching query");
         const slipsQuery = await connection.execute(sql, binds, options);
-        let orders = [];
         let reducedOrders = slipsQuery.rows.map((row) => ({
           sid: row.SLIP_SID,
           date: row.MODIFIED_DATE.getTime(),
@@ -246,24 +245,6 @@ class Script {
           };
           orders.push(singleOrder);
         }
-        let summary_lines = [];
-        for (let j = 0; j < orders.length; j++) {
-          let curr = orders[j];
-          let line = {
-            receiving_store_name: curr.store_name,
-            order_no: curr.slip_no,
-            number_of_lines: curr.lines.length,
-          };
-          summary_lines.push(line);
-        }
-
-        let summary = {
-          number_of_orders: orders.length,
-          summary_lines: summary_lines,
-        };
-        console.log(orders);
-        console.log(summary);
-        group.push(orders);
         if (reducedOrders.length > 0) {
           let lastScannedVal = reducedUniqueOrders[targetIndex].sid;
           if (lastScannedVal.length > 0) {
@@ -282,14 +263,14 @@ class Script {
       }
     }
     const chunkSize = 50;
-    for (let i = 0; i < group.length; i += chunkSize) {
-      const chunk = group.slice(i, i + chunkSize);
+    for (let i = 0; i < orders.length; i += chunkSize) {
+      const chunk = orders.slice(i, i + chunkSize);
       await axios
-        .post(`${this.julebApiUrl}/transfer`, group)
+        .post(`${this.julebApiUrl}/transfer`, chunk)
         .then(() => {
           console.log(
             `${chunk.length} orders sent, total send ${i + chunk.length} / ${
-              group.length
+              orders.length
             }`
           );
         })
