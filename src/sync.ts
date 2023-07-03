@@ -120,12 +120,12 @@ class Script {
   }
 
   async poll(connection, stores, bookmark?, startingDate?) {
-    console.log("polling branch receipts");
+    console.log("polling branch transfers");
     const orders = [];
     for (let i = 0; i < stores.length; i++) {
       const currentStore = stores[i];
       console.log(
-        `polling branch receipts for ${currentStore} / ${stores.length}`
+        `polling branch transfers for ${currentStore} / ${stores.length}`
       );
       try {
         let sql;
