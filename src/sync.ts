@@ -263,8 +263,6 @@ class Script {
         console.log(ex);
       }
     }
-    console.log(orders);
-    return;
 
     const chunkSize = 50;
     for (let i = 0; i < orders.length; i += chunkSize) {
