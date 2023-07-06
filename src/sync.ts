@@ -136,8 +136,7 @@ class Script {
           "store_code"
         );
         if (!bookmark) {
-          const sql2 =
-            `SELECT CMS.SLIP.SLIP_SID,
+          const sql2 = `SELECT CMS.SLIP.SLIP_SID,
             OUT_STORE_NO,
             IN_STORE_NO,
             CMS.SLIP.CREATED_DATE,
@@ -159,9 +158,10 @@ class Script {
             ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
             AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
             WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
-            AND (CMS.SLIP.PROC_STATUS is null OR (CMS.SLIP.PROC_STATUS != 16 AND CMS.SLIP.PROC_STATUS != 32))
-            AND CMS.SLIP.POST_DATE >= ` +
-            `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
+            AND CMS.SLIP.SLIP_NO = 136124`;
+          // AND (CMS.SLIP.PROC_STATUS is null OR (CMS.SLIP.PROC_STATUS != 16 AND CMS.SLIP.PROC_STATUS != 32))
+          // AND CMS.SLIP.POST_DATE >= ` +
+          // `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           sql = sql2;
           binds = [store_info.store_no, store_info.store_no];
         } else {
@@ -263,6 +263,9 @@ class Script {
         console.log(ex);
       }
     }
+    console.log(orders);
+    return;
+
     const chunkSize = 50;
     for (let i = 0; i < orders.length; i += chunkSize) {
       const chunk = orders.slice(i, i + chunkSize);
