@@ -5,7 +5,7 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb-dev.com/agent_receiver/retailpro";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
   // julebApiUrl = "https://e95d-176-18-80-157.ngrok-free.app/retailpro";
 
   constructor() {}
@@ -92,7 +92,7 @@ class Script {
         console.log(stocksQuery.rows);
         const stockPayload = {
           store_code: store_info.store_code,
-          lines: stocksQuery.rows.slice(0, 10),
+          lines: stocksQuery.rows,
         };
 
         let summary = {
