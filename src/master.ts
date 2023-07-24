@@ -55,6 +55,12 @@ class Script {
     };
     console.log("fetching masterdata query");
     const masterDataQuery = await connection.execute(sql, binds, options);
+    console.log(
+      masterDataQuery.rows
+        .slice(10, 50)
+        .filter((rec) => rec.BONUS || rec.DISCOUNT)
+    );
+
     const payload = {
       selector: "Full",
       lines: masterDataQuery.rows.slice(10, 50),
