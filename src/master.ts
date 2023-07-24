@@ -5,7 +5,7 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb-dev.com/agent_receiver/retailpro";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
   // julebApiUrl = "https://0c2d-176-18-80-157.ngrok-free.app/retailpro";
 
   constructor() {}
@@ -55,15 +55,9 @@ class Script {
     };
     console.log("fetching masterdata query");
     const masterDataQuery = await connection.execute(sql, binds, options);
-    console.log(
-      masterDataQuery.rows
-        .slice(50, 70)
-        .filter((rec) => rec.BONUS || rec.DISCOUNT)
-    );
-
     const payload = {
       selector: "Full",
-      lines: masterDataQuery.rows.slice(50, 70),
+      lines: masterDataQuery.rows,
     };
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
