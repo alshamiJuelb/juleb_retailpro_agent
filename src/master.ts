@@ -58,12 +58,10 @@ class Script {
     const chunkSize = 5000;
     for (let i = 0; i < masterDataQuery.rows.length; i += chunkSize) {
       const lines = masterDataQuery.rows.slice(i, i + chunkSize);
-      await axios
-        .post(`${this.julebApiUrl}/master-data`, lines)
-        .then(async function (response) {
-          console.log("sent:");
-          console.log(lines.length);
-        });
+      await axios.post(`${this.julebApiUrl}/products`, lines).then(() => {
+        console.log("sent:");
+        console.log(lines.length);
+      });
     }
   }
 
