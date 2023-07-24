@@ -57,7 +57,7 @@ class Script {
     const masterDataQuery = await connection.execute(sql, binds, options);
     const payload = {
       selector: "Full",
-      lines: masterDataQuery.rows.slice(0, 10),
+      lines: masterDataQuery.rows.slice(10, 50),
     };
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
