@@ -34,6 +34,7 @@ class Script {
           D_NAME,
           C_NAME,
           S_NAME,
+          CMS.INVN_SBS.LST_RCVD_COST as ORDER_COST,
           CMS.INVN_SBS.VEND_LIST_COST,
           CMS.INVN_SBS.TRADE_DISC_PERC,
           INVN_UDF_V.UDF_3 as DISCOUNT,
