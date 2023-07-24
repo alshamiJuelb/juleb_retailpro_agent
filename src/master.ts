@@ -55,18 +55,17 @@ class Script {
     };
     console.log("fetching masterdata query");
     const masterDataQuery = await connection.execute(sql, binds, options);
-    console.log(masterDataQuery.rows.slice(0, 10));
     const payload = {
       selector: "Full",
       lines: masterDataQuery.rows.slice(0, 10),
     };
-    // await axios
-    //   .post(`${this.julebApiUrl}/master-data`, payload)
-    //   .then(async function (response) {
-    //     console.log("sent:");
-    //     console.log(masterDataQuery.rows.length);
-    //     console.log(response);
-    //   });
+    await axios
+      .post(`${this.julebApiUrl}/master-data`, payload)
+      .then(async function (response) {
+        console.log("sent:");
+        console.log(masterDataQuery.rows.length);
+        console.log(response);
+      });
   }
 
   async syncPrices(connection) {
