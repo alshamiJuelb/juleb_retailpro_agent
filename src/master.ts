@@ -33,12 +33,18 @@ class Script {
           CMS.INVN_SBS_PRICE.PRICE_LVL,
           D_NAME,
           C_NAME,
-          S_NAME
+          S_NAME,
+          CMS.INVN_SBS.VEND_LIST_COST,
+          CMS.INVN_SBS.TRADE_DISC_PERC,
+          INVN_UDF_V.UDF_3 as DISCOUNT,
+          INVN_UDF_V.UDF_11 as BONUS
           FROM CMS.INVN_SBS
           LEFT JOIN CMS.INVN_SBS_PRICE
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_SBS_PRICE.ITEM_SID
           LEFT JOIN CMS.DCS
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
+          LEFT JOIN CMS.INVN_UDF_V
+          ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_UDF_V.ITEM_SID
           WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
           AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
     const options = {
