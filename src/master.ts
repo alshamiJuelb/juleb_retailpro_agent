@@ -57,7 +57,7 @@ class Script {
     const masterDataQuery = await connection.execute(sql, binds, options);
     console.log(
       masterDataQuery.rows
-        .slice(10, 50)
+        .slice(50, 70)
         .filter((rec) => rec.BONUS || rec.DISCOUNT)
     );
 
