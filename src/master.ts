@@ -58,16 +58,11 @@ class Script {
     const chunkSize = 5000;
     for (let i = 0; i < masterDataQuery.rows.length; i += chunkSize) {
       const lines = masterDataQuery.rows.slice(i, i + chunkSize);
-      const payload = {
-        selector: "Full",
-        lines,
-      };
       await axios
-        .post(`${this.julebApiUrl}/master-data`, payload)
+        .post(`${this.julebApiUrl}/master-data`, lines)
         .then(async function (response) {
           console.log("sent:");
-          console.log(masterDataQuery.rows.length);
-          console.log(response);
+          console.log(lines.length);
         });
     }
   }
@@ -110,7 +105,7 @@ class Script {
     });
 
     await axios
-      .post(`${this.julebApiUrl}/master-data`, payload)
+      .post(`${this.julebApiUrl}/products`, payload)
       .then(async function (response) {
         console.log("sent:");
         console.log(masterDataQuery.rows);
