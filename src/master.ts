@@ -5,7 +5,7 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  julebApiUrl = "https://api.juleb-dev.com/agent_receiver/retailpro";
   // julebApiUrl = "https://0c2d-176-18-80-157.ngrok-free.app/retailpro";
 
   constructor() {}
@@ -46,8 +46,7 @@ class Script {
           ON CMS.DCS.DCS_CODE = CMS.INVN_SBS.DCS_CODE
           LEFT JOIN CMS.INVN_UDF_V
           ON CMS.INVN_SBS.ITEM_SID = CMS.INVN_UDF_V.ITEM_SID
-          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1
-          AND CMS.INVN_SBS.CREATED_DATE >= TO_DATE('${formattedDate}', 'YYYY-MM-DD HH24:MI:SS')`; //
+          WHERE CMS.INVN_SBS_PRICE.PRICE_LVL = 1`; //
     const options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
       fetchInfo: {
@@ -58,7 +57,7 @@ class Script {
     const masterDataQuery = await connection.execute(sql, binds, options);
     const payload = {
       selector: "Full",
-      lines: masterDataQuery.rows,
+      lines: masterDataQuery.rows.slice(0, 10),
     };
     await axios
       .post(`${this.julebApiUrl}/master-data`, payload)
@@ -135,7 +134,7 @@ class Script {
         : "localhost:1521/rproods",
     });
     await this.syncProducts(connection);
-    await this.syncPrices(connection);
+    // await this.syncPrices(connection);
   }
 }
 
