@@ -99,16 +99,13 @@ class Script {
 
     console.log({
       selector: payload.selector,
-      lines: payload.lines.slice(0, 10),
+      lines: payload.lines,
     });
 
-    await axios
-      .post(`${this.julebApiUrl}/products`, payload)
-      .then(async function (response) {
-        console.log("sent:");
-        console.log(masterDataQuery.rows);
-        console.log(response);
-      });
+    await axios.post(`${this.julebApiUrl}/prices`, payload).then(() => {
+      console.log("sent:");
+      console.log(masterDataQuery.rows);
+    });
   }
 
   async wrapper() {
