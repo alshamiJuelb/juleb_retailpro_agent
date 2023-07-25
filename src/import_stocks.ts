@@ -5,8 +5,9 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  // julebApiUrl = "https://e95d-176-18-80-157.ngrok-free.app/retailpro";
+  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  julebApiUrl =
+    "https://f17e-2a02-9b0-402d-3f04-8810-ccbf-3b4c-b12e.ngrok-free.app/retailpro";
 
   constructor() {}
   async fetchStoreName(connection, store_code, identifier) {
@@ -69,6 +70,7 @@ class Script {
                       CMS.LOT_QTY.QTY,
                       CMS.LOT_QTY.ITEM_SID,
                       CMS.LOT.EXPIRY_DATE,
+                      CMS.LOT.LOT_NAME,
                       CMS.INVENTORY_ALU_ALL.ALU,
                       CMS.INVN_SBS.ACTIVE
                       FROM CMS.LOT_QTY
@@ -125,10 +127,10 @@ class Script {
       (await promises.readFile(this.paramsFilePath)).toString()
     );
     console.log({ params });
-    const stores =
-      typeof params.storeCode === "string"
-        ? params.storeCode.split(",")
-        : params.storeCode;
+    const stores = ["901"];
+    // typeof params.storeCode === "string"
+    //   ? params.storeCode.split(",")
+    //   : params.storeCode;
     const connection = await oracledb.getConnection({
       user: params.user ? params.user : "reportuser",
       password: params.password ? params.password : "report",
