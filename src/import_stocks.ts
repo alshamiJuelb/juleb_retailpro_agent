@@ -94,7 +94,7 @@ class Script {
         console.log(stocksQuery.rows);
         const stockPayload = {
           store_code: store_info.store_code,
-          lines: stocksQuery.rows,
+          lines: stocksQuery.rows.slice(0, 50),
         };
 
         let summary = {
@@ -127,7 +127,7 @@ class Script {
       (await promises.readFile(this.paramsFilePath)).toString()
     );
     console.log({ params });
-    const stores = ["P01"];
+    const stores = ["M01"];
     // typeof params.storeCode === "string"
     //   ? params.storeCode.split(",")
     //   : params.storeCode;
