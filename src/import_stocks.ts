@@ -5,9 +5,9 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  julebApiUrl =
-    "https://f17e-2a02-9b0-402d-3f04-8810-ccbf-3b4c-b12e.ngrok-free.app/retailpro";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  // julebApiUrl =
+  //   "https://f17e-2a02-9b0-402d-3f04-8810-ccbf-3b4c-b12e.ngrok-free.app/retailpro";
 
   constructor() {}
   async fetchStoreName(connection, store_code, identifier) {
@@ -94,7 +94,7 @@ class Script {
         console.log(stocksQuery.rows);
         const stockPayload = {
           store_code: store_info.store_code,
-          lines: stocksQuery.rows.slice(0, 50),
+          lines: stocksQuery.rows,
         };
 
         let summary = {
@@ -127,10 +127,10 @@ class Script {
       (await promises.readFile(this.paramsFilePath)).toString()
     );
     console.log({ params });
-    const stores = ["M01"];
-    // typeof params.storeCode === "string"
-    //   ? params.storeCode.split(",")
-    //   : params.storeCode;
+    const stores =
+      typeof params.storeCode === "string"
+        ? params.storeCode.split(",")
+        : params.storeCode;
     const connection = await oracledb.getConnection({
       user: params.user ? params.user : "reportuser",
       password: params.password ? params.password : "report",
