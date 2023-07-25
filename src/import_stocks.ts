@@ -127,7 +127,7 @@ class Script {
       (await promises.readFile(this.paramsFilePath)).toString()
     );
     console.log({ params });
-    const stores = ["901"];
+    const stores = ["P01"];
     // typeof params.storeCode === "string"
     //   ? params.storeCode.split(",")
     //   : params.storeCode;
