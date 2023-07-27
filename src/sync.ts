@@ -157,7 +157,7 @@ class Script {
             INNER JOIN CMS.LOT
             ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
             AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
-            WHERE WHERE CMS.SLIP.SLIP_NO=127699
+            WHERE CMS.SLIP.SLIP_NO=127699
             AND (CMS.SLIP.PROC_STATUS is null OR (CMS.SLIP.PROC_STATUS != 16 AND CMS.SLIP.PROC_STATUS != 32))`;
           // AND CMS.SLIP.POST_DATE >= ` +
           // `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
