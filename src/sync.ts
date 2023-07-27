@@ -6,8 +6,8 @@ import { existsSync, promises } from "fs";
 class Script {
   paramsFilePath: string = "./params.json";
   bookmarkFilePath: string = "./bookmarks.json";
-  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  julebApiUrl = "https://6cbb-5-82-134-130.ngrok-free.app/retailpro";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  // julebApiUrl = "https://6cbb-5-82-134-130.ngrok-free.app/retailpro";
 
   constructor() {}
 
@@ -158,8 +158,7 @@ class Script {
             INNER JOIN CMS.LOT
             ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
             AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
-            WHERE CMS.SLIP.SLIP_NO=127699
-            AND (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
+            WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
             AND (CMS.SLIP.PROC_STATUS is null OR (CMS.SLIP.PROC_STATUS != 16 AND CMS.SLIP.PROC_STATUS != 32))
             AND CMS.SLIP.POST_DATE >= ` +
             `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
