@@ -198,7 +198,7 @@ class Script {
           },
         };
         console.log("fetching query");
-        const slipsQuery = await connection.execute(sql, binds, options);
+        const slipsQuery = await connection.execute(sql, options);
         let reducedOrders = slipsQuery.rows.map((row) => ({
           sid: row.SLIP_SID,
           date: row.MODIFIED_DATE.getTime(),
