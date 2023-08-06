@@ -268,7 +268,7 @@ class Script {
     const chunkSize = 50;
     for (let i = 0; i < orders.length; i += chunkSize) {
       const chunk = orders.slice(i, i + chunkSize);
-      console.log(chunk);
+      console.log(JSON.stringify(chunk));
 
       // await axios
       //   .post(`${this.julebApiUrl}/transfer`, chunk)
