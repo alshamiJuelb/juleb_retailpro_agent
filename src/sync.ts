@@ -160,6 +160,7 @@ class Script {
             AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
             WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
             AND (CMS.SLIP.PROC_STATUS is null OR (CMS.SLIP.PROC_STATUS != 16 AND CMS.SLIP.PROC_STATUS != 32))
+            AND CMS.SLIP.SLIP_SID = '-8852717491091815309'
             AND CMS.SLIP.POST_DATE >= ` +
             `TO_DATE('${startingDate}', 'YYYY-MM-DD HH24:MI:SS')`; ////TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           sql = sql2;
@@ -267,18 +268,20 @@ class Script {
     const chunkSize = 50;
     for (let i = 0; i < orders.length; i += chunkSize) {
       const chunk = orders.slice(i, i + chunkSize);
-      await axios
-        .post(`${this.julebApiUrl}/transfer`, chunk)
-        .then(() => {
-          console.log(
-            `${chunk.length} orders sent, total send ${i + chunk.length} / ${
-              orders.length
-            }`
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      console.log(chunk);
+
+      // await axios
+      //   .post(`${this.julebApiUrl}/transfer`, chunk)
+      //   .then(() => {
+      //     console.log(
+      //       `${chunk.length} orders sent, total send ${i + chunk.length} / ${
+      //         orders.length
+      //       }`
+      //     );
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     }
   }
 
