@@ -268,20 +268,20 @@ class Script {
     const chunkSize = 50;
     for (let i = 0; i < orders.length; i += chunkSize) {
       const chunk = orders.slice(i, i + chunkSize);
-      console.log(JSON.stringify(chunk));
+      console.log(chunk);
 
-      // await axios
-      //   .post(`${this.julebApiUrl}/transfer`, chunk)
-      //   .then(() => {
-      //     console.log(
-      //       `${chunk.length} orders sent, total send ${i + chunk.length} / ${
-      //         orders.length
-      //       }`
-      //     );
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+      await axios
+        .post(`${this.julebApiUrl}/transfer`, chunk)
+        .then(() => {
+          console.log(
+            `${chunk.length} orders sent, total send ${i + chunk.length} / ${
+              orders.length
+            }`
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
