@@ -187,6 +187,7 @@ class Script {
           INNER JOIN CMS.LOT
           ON CMS.SLIP_ITEM.LOT_NUMBER = CMS.LOT.LOT_NUMBER
           AND CMS.SLIP_ITEM.ITEM_SID  = CMS.LOT.ITEM_SID
+          AND CMS.SLIP.SLIP_NO = 130953
           WHERE (CMS.SLIP.OUT_STORE_NO = :v1 OR  CMS.SLIP.IN_STORE_NO = :v2)
           AND CMS.SLIP.POST_DATE      >= :v3`; //TODO: modify this to use OUT_STORE_NO, IN_STORE_NO,
           binds = [store_info.store_no, store_info.store_no, bookMark];
