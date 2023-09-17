@@ -95,11 +95,6 @@ class Script {
           store_code: store_info.store_code,
           lines: stocksQuery.rows,
         };
-        await promises.writeFile(
-          "./export.json",
-          JSON.stringify(stocksQuery.rows)
-        );
-        return;
         let summary = {
           number_of_orders: stockPayload.lines.length,
           receiving_store: store_info.store_code,
