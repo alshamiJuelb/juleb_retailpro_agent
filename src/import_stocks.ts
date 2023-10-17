@@ -5,9 +5,9 @@ import { existsSync, promises } from "fs";
 
 class Script {
   paramsFilePath: string = "./params.json";
-  // julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
-  julebApiUrl =
-    "https://5b45-2a02-9b0-4047-d5dd-98d-69e3-53d0-14f4.ngrok-free.app/retailpro";
+  julebApiUrl = "https://api.juleb.com/agent_receiver/retailpro";
+  // julebApiUrl =
+  //   "https://5b45-2a02-9b0-4047-d5dd-98d-69e3-53d0-14f4.ngrok-free.app/retailpro";
 
   constructor() {}
   async fetchStoreName(connection, store_code, identifier) {
